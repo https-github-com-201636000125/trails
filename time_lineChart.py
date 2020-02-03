@@ -1,4 +1,7 @@
 # encoding=utf-8
+'''
+将标注OURS1改成OURS2，将OURS3改成OURS1
+'''
 import matplotlib.pyplot as plt
 
 def read_time(K,epsilon,pro_name):
@@ -32,31 +35,31 @@ if __name__ == '__main__':
         #pl.xlim(-1, 11) # 限定横轴的范围
         #pl.ylim(-1, 110) # 限定纵轴的范围
         
-        p_long=9
-        p_width=7
+        p_long=10
+        p_width=8
         #初始化画布
         plt.figure(figsize=(p_long,p_width))
         
         #x轴
         names = [10, 20, 30, 40, 50, 60, 70, 80]
         x = range(len(names))       
-        plt.plot(x, infocom15_means,marker='p',label='INFOCOM15')
-        plt.plot(x, infocom17_means,marker='*',label='INFOCOM17')
-        plt.plot(x, ours1_means,marker='s',label='OURS1')
-        plt.plot(x, ours3_means,marker='x',label='OURS3')
+        plt.plot(x, infocom15_means,linewidth=1.8,linestyle='-.',marker='p',label='INFOCOM15')
+        plt.plot(x, infocom17_means,linewidth=1.8,linestyle='-.',marker='*',label='INFOCOM17')
+        plt.plot(x, ours3_means,linewidth=1.8,linestyle='-.',marker='x',label='OURS1')
+        plt.plot(x, ours1_means,linewidth=1.8,linestyle='-.',marker='s',label='OURS2')
         
         #plt.legend(loc='best') # 让图例生效
         plt.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0)
-        plt.xticks(x, names, rotation=45)
+        plt.xticks(x, names, rotation=45,fontsize=15)
         plt.margins(0)
         plt.subplots_adjust(bottom=0.15,right=0.74)
         
-        plt.xlabel('Numbers of Groups') 
-        plt.ylabel('time(s)')
+        plt.xlabel('Numbers of Groups',fontsize=15) 
+        plt.ylabel('time(s)',fontsize=15)
         plt.title('')
         
         #网格
-        plt.grid(alpha=1,axis='y',linestyle='-')  
+        plt.grid(alpha=1,linestyle='-.',c='gray')  
         
         #plt.show()
         plt.savefig('output/time/'+'_e('+str(E[e])+')'+'.png')

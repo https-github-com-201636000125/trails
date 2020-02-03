@@ -1,6 +1,8 @@
 # encoding=utf-8
 import matplotlib.pyplot as plt
-
+'''
+将标注OURS1改成OURS2，将OURS3改成OURS1
+'''
 def read_Hausdorff(K,epsilon,pro_name):
     means=[]
     for i in range(len(pro_name)):
@@ -46,8 +48,8 @@ if __name__ == '__main__':
         x = range(len(names))       
         plt.plot(x, infocom15_means[e],marker='p',label='INFOCOM15 epsilon='+str(E[e]))
         plt.plot(x, infocom17_means[e],marker='*',label='INFOCOM17 epsilon='+str(E[e]))
-        plt.plot(x, ours1_means[e],marker='s',label='OURS1 epsilon='+str(E[e]))
-        plt.plot(x, ours3_means[e],marker='x',label='OURS3 epsilon='+str(E[e]))
+        plt.plot(x, ours3_means[e],marker='x',label='OURS1 epsilon='+str(E[e]))
+        plt.plot(x, ours1_means[e],marker='s',label='OURS2 epsilon='+str(E[e]))
         
         #plt.legend(loc='best') # 让图例生效
         plt.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0)

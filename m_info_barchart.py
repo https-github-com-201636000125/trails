@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+'''
+将标注OURS1改成OURS2，将OURS3改成OURS1
+'''
 #互信息
 def read_m_info(K,epsilon,pro_name):
     means=[]
@@ -39,10 +41,10 @@ if __name__ == '__main__':
                         color='#000000', label='INFOCOM15')
         rects2 = ax.bar(ind - width/4-deltaDis, infocom17_means, width/2,
                         color='#FAEBD7', label='INFOCOM17')
-        rects3 = ax.bar(ind + width/4, ours1_means, width/2,
-                        color='#808A87', label='OURS1')
         rects4 = ax.bar(ind + width*3/4+deltaDis, ours3_means, width/2,
-                        color='#DCDCDC', label='OURS3')
+                        color='#DCDCDC', label='OURS1')
+        rects3 = ax.bar(ind + width/4, ours1_means, width/2,
+                        color='#808A87', label='OURS2')
         
         ax.set_xlabel('Numbers of Groups'+' (epsilon='+str(epsilon)+')')
         ax.set_ylabel('Mutual Inforcomation')

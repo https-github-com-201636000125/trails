@@ -1,6 +1,8 @@
 # encoding=utf-8
 import matplotlib.pyplot as plt
-
+'''
+将标注OURS1改成OURS2，将OURS3改成OURS1
+'''
 def read_wrq(pro_name,E,K,D):
     #name*epsilon*k*delta
     means=[]
@@ -61,8 +63,8 @@ if __name__ == '__main__':
             
             new.plot(x, infocom15_means,linewidth=1.8,linestyle='-.',marker='p',label='INFOCOM15')
             new.plot(x, infocom17_means,linewidth=1.8,linestyle='-.',marker='*',label='INFOCOM17')
-            new.plot(x, ours1_means,linewidth=1.8,linestyle='-.',marker='s',label='OURS1')
-            new.plot(x, ours3_means,linewidth=1.8,linestyle='-.',marker='x',label='OURS3')
+            new.plot(x, ours3_means,linewidth=1.8,linestyle='-.',marker='x',label='OURS1')
+            new.plot(x, ours1_means,linewidth=1.8,linestyle='-.',marker='s',label='OURS2')
             
             ax.append(new)
         
@@ -75,7 +77,8 @@ if __name__ == '__main__':
             plt.subplots_adjust(bottom=0.15)
             plt.xlabel('(Numbers of Groups)',fontsize=15) 
             plt.ylabel('wrq',fontsize=15)
-            
+            plt.title('delta='+str(D[d]))
+            plt.tight_layout()
             #网格
             plt.grid(alpha=1,linestyle='-.',c='gray')  
             #plt.subplots_adjust(right=0.72)
