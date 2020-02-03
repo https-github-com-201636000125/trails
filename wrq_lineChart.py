@@ -1,20 +1,29 @@
 # encoding=utf-8
 import matplotlib.pyplot as plt
 
-def read_wrq(kmeans_k,epsilon,D,pro_name):
+def read_wrq(pro_name,E,K,D):
+    #name*epsilon*k*delta
     means=[]
-    for i in range(len(pro_name)):
+    for p in range(len(pro_name)):
         means.append([])
-    for delta in D:
-        for p in range(len(pro_name)):
-            fileName=pro_name[p]+'/'+pro_name[p]+'/output/'+'k(' + str(
-                kmeans_k) + ')_e(' + str(epsilon) +')_delta('+str(delta)+ ')wrq' + '.txt'
-            f=open(fileName,'r')
-            infos=f.readlines()
-            f.close()
-            means[p].append(float(infos[0]))
+        for e in range(len(E)):
+            means[p].append([])
+            for k in range(len(K)):
+                means[p][e].append([])
+                for d in range(len(D)):
+                    fileName=pro_name[p]+'/'+pro_name[p]+'/output/'+'k(' + str(K[k]) + \
+                        ')_e(' + str(E[e]) +')_delta('+str(D[d])+ ')wrq' + '.txt'
+                    f=open(fileName,'r')
+                    infos=f.readlines()
+                    f.close()
+                    means[p][e][k].append(float(infos[0]))
     return means
 
+def get_info(means,p,e,K,d):
+    re=[]
+    for k in range(len(K)):
+        re.append(means[p][e][k][d])
+    return re
 
 if __name__ == '__main__':
     
@@ -23,53 +32,55 @@ if __name__ == '__main__':
     E = [0.1, 0.5, 1.0, 1.5, 2.0]
     D = [0.4,0.6,0.8,1.0]
     
+    #means ( name*epsilon*k*delta )
+    means=read_wrq(pro_name,E,K,D)
     
     
-    for kmeans_k in K:
-        infocom15_means=[]
-        infocom17_means=[]
-        ours1_means=[]
-        ours3_means=[]
-        for e in range(len(E)):
-            means=read_wrq(kmeans_k,E[e],D,pro_name)
-            infocom15_means.append(tuple(means[0]))
-            infocom17_means.append(tuple(means[1]))
-            ours1_means.append(tuple(means[2]))
-            ours3_means.append(tuple(means[3]))
+    for e in range(len(E)):
+        
+        #初始化画布
+        p_long=9
+        p_width=9
+        fig=plt.figure(figsize=(p_long,p_width))
         
         #pl.xlim(-1, 11) # 限定横轴的范围
         #pl.ylim(-1, 110) # 限定纵轴的范围
-        
-        p_long=9
-        p_width=7
-        
-        for e in range(len(E)):
-            #初始化画布
-            plt.figure(figsize=(p_long,p_width))
+        ax=[]
+        for d in range(len(D)):
             #x轴
-            names = [0.4,0.6,0.8,1.0]
+            names = K
             x = range(len(names))
             
-            plt.plot(x, infocom15_means[e],marker='p',label='INFOCOM15 epsilon='+str(E[e]))
-            plt.plot(x, infocom17_means[e],marker='*',label='INFOCOM17 epsilon='+str(E[e]))
-            plt.plot(x, ours1_means[e],marker='s',label='OURS1 epsilon='+str(E[e]))
-            plt.plot(x, ours3_means[e],marker='x',label='OURS3 epsilon='+str(E[e]))
+            #2行2列第（d+1）个子图
+            new=fig.add_subplot(220+d+1)
             
-            #plt.legend(loc='best') # 让图例生效
-            plt.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0)
-            plt.xticks(x, names, rotation=45)
+            infocom15_means=get_info(means,0,e,K,d)
+            infocom17_means=get_info(means,1,e,K,d)
+            ours1_means=get_info(means,2,e,K,d)
+            ours3_means=get_info(means,3,e,K,d)
+            
+            new.plot(x, infocom15_means,linewidth=1.8,linestyle='-.',marker='p',label='INFOCOM15')
+            new.plot(x, infocom17_means,linewidth=1.8,linestyle='-.',marker='*',label='INFOCOM17')
+            new.plot(x, ours1_means,linewidth=1.8,linestyle='-.',marker='s',label='OURS1')
+            new.plot(x, ours3_means,linewidth=1.8,linestyle='-.',marker='x',label='OURS3')
+            
+            ax.append(new)
+        
+            plt.plot(fontsize=15)
+            plt.legend(loc='best') # 让图例生效
+            #plt.legend(loc=2, bbox_to_anchor=(1.05,1.0),borderaxespad = 0)
+            plt.xticks(x, names, rotation=45,fontsize=15)
+            plt.yticks(fontsize=15)
             plt.margins(0)
             plt.subplots_adjust(bottom=0.15)
+            plt.xlabel('(Numbers of Groups)',fontsize=15) 
+            plt.ylabel('wrq',fontsize=15)
             
-            plt.xlabel('delta'+' ( Numbers of Groups= '+str(kmeans_k)+')') 
-            plt.ylabel('wrq')
-            plt.title('')
-             
             #网格
-            plt.grid(alpha=1,axis='y',linestyle='-')  
-            plt.subplots_adjust(right=0.72)
-            #plt.show()
-            plt.savefig('output/wrq/'+'_e('+str(E[e])+')_k('+str(kmeans_k)+ ')'+'.png')
+            plt.grid(alpha=1,linestyle='-.',c='gray')  
+            #plt.subplots_adjust(right=0.72)
+        #plt.show()
+        plt.savefig('output/wrq/'+'_e('+str(E[e])+')'+'.png')
             
         
     
