@@ -23,18 +23,21 @@ class Solver:
         for epsilon in E:
             a = time.time()
             solveTravels.solve(self.segNum, self.choiceNum,
-                               self.k, epsilon/(2.0*self.segNum))
+                               self.k, epsilon/(2.0*self.segNum),epsilon)
             fileName = 'output/' + 'k(' + str(
                 self.k) + ')_e(' + str(epsilon) + ')' + 'Cluster_time.txt'
             fout = open(fileName, 'w')
             print(time.time() - a, file=fout)
             fout.close()
-            trails = ReMakeTrails.get_second_trails('output_trails.txt',
+            trails = ReMakeTrails.get_second_trails('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_trails.txt',
                                                     self.segNum,
                                                     self.choiceNum)
-            centers = ReMakeTrails.get_second_centers('output_centers.txt',
+            centers = ReMakeTrails.get_second_centers('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_centers.txt',
                                                       self.segNum, self.k)
-            labels = ReMakeTrails.get_second_labels('output_labels.txt',
+            labels = ReMakeTrails.get_second_labels('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_labels.txt',
                                                     self.segNum,
                                                     self.choiceNum)
             # ReMakeTrails.centers_add_noisy(trails,centers,labels,self.segNum,
@@ -97,7 +100,7 @@ class Solver:
 
 
 # 半径delta最好是0.2,0.4,0.6,0.8,1.0
-# k=60,e=1.0
+
 if __name__ == '__main__':
     K = [10, 20, 30, 40, 50, 60, 70, 80]
     E = [0.1, 0.5, 1.0, 1.5, 2.0]

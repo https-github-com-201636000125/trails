@@ -23,20 +23,23 @@ class Solver:
         for epsilon in E:
 
             a = time.time()
-            solveTravels.solve(self.segNum, self.choiceNum, self.k)
+            solveTravels.solve(self.segNum, self.choiceNum, self.k,epsilon)
             fileName = 'output/' + 'k(' + str(
                 self.k) + ')_e(' + str(epsilon) + ')' + 'Cluster_time.txt'
             fout = open(fileName, 'w')
             print(time.time() - a, file=fout)
             fout.close()
 
-            trails = ReMakeTrails.get_second_trails('output_trails.txt',
+            trails = ReMakeTrails.get_second_trails('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_trails.txt',
                                                     self.segNum,
                                                     self.choiceNum)
 
-            centers = ReMakeTrails.get_second_centers('output_centers.txt',
+            centers = ReMakeTrails.get_second_centers('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_centers.txt',
                                                       self.segNum, self.k)
-            labels = ReMakeTrails.get_second_labels('output_labels.txt',
+            labels = ReMakeTrails.get_second_labels('temp/' + 'k(' + str(
+                self.k) + ')_e(' + str(epsilon) + ')' + 'output_labels.txt',
                                                     self.segNum,
                                                     self.choiceNum)
             # ReMakeTrails.centers_add_noisy(trails,centers,labels,self.segNum,
