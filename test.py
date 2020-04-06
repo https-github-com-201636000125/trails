@@ -45,9 +45,9 @@ if __name__=='__main__':
     pro_name=['INFOCOM15','INFOCOM17','OURS1','OURS3']
     K = [10, 20, 30, 40, 50, 60, 70, 80]
     E = [0.1, 0.5, 1.0, 1.5, 2.0]
-    
+    '''
     for e in E:
         read_time(K,e,pro_name)
-    
+    '''
     
     
